@@ -4,150 +4,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>글 목록 - My Archive</title>
+    <title>카테고리 선택 - My Archive</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background-color: #f8f9fa; }
-        /* 헤더 높이 축소 */
-        .list-header { background: #2c3e50; color: white; padding: 20px 0; margin-bottom: 20px; }
-        .list-header h2 { font-size: 1.5rem; margin-bottom: 5px; }
+        .list-header { background: #2c3e50; color: white; padding: 30px 0; margin-bottom: 30px; }
+        .list-header h2 { font-size: 1.5rem; }
 
-        .search-container { max-width: 500px; margin: 0 auto 20px auto; }
-        .search-container .form-control-lg { font-size: 1rem; padding: 8px 15px; }
-
-        .post-table-container { background: white; border-radius: 5px; overflow: hidden; }
-
-        /* [핵심] 초슬림 테이블 스타일링 */
-        .table thead { background-color: #34495e; color: white; }
-        .table thead th { padding: 6px 10px !important; font-size: 0.85rem; }
-
-        .table-hover tbody tr:hover { background-color: #f1f3f5; cursor: pointer; }
-
-        /* 각 행의 여백을 극한으로 축소 */
-        .table td {
-            padding: 3px 10px !important; /* 상하 여백 3px */
-            font-size: 0.85rem;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .post-row { position: relative; }
-
-        /* 제목 폰트 슬림화 및 한 줄 처리 */
-        .post-link {
+        /* 중분류 카드 스타일 */
+        .category-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
             text-decoration: none;
             color: #2c3e50;
-            font-weight: 500;
-            display: block;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* 제목이 너무 길면 ... 처리 */
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-
-        .stretched-link::after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; content: ""; }
-
-        /* 날짜 및 번호 텍스트 크기 축소 */
-        .post-date { color: #95a5a6; font-size: 0.75rem; }
-        .post-no { color: #bdc3c7; font-size: 0.75rem; }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            color: #18bc9c;
+        }
+        .card-icon { font-size: 2rem; margin-bottom: 10px; }
+        .btn-enter {
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            padding: 5px 15px;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
 
 <header class="list-header text-center">
     <div class="container">
-        <h2 class="fw-bold">카테고리 게시판</h2>
-        <p class="mb-0 small text-white-50">수동으로 관리되는 데이터 리스트입니다.</p>
-        <a href="../../index.html" class="btn btn-xs btn-outline-light mt-2" style="font-size: 0.7rem; padding: 2px 8px;">🏠 홈으로</a>
+        <h2 class="fw-bold">Electronics 자료실</h2>
+        <p class="mb-0 small text-white-50">상세 분류를 선택하세요.</p>
+        <a href="../../index.html" class="btn btn-xs btn-outline-light mt-2" style="font-size: 0.7rem;">🏠 메인으로</a>
     </div>
 </header>
 
-<div class="container-fluid px-md-5">
-    <div class="search-container">
-        <input type="text" id="searchInput" class="form-control shadow-sm" placeholder="검색어를 입력하세요...">
-    </div>
+<div class="container my-5">
+    <div class="row g-3 justify-content-center">
+        <div class="col-6 col-md-4">
+            <a href="list_theory.html" class="category-card shadow-sm">
+                <div class="card-icon">📖</div>
+                <h5 class="fw-bold">기초 이론</h5>
+                <p class="text-muted small d-none d-sm-block">회로 및 진공관 기초</p>
+                <span class="btn-enter">입장</span>
+            </a>
+        </div>
 
-    <div class="row justify-content-center">
-        <div class="col-lg-11">
-            <div class="post-table-container shadow-sm border">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="ps-3" style="width: 60px;">번호</th>
-                            <th scope="col">제목</th>
-                            <th scope="col" class="text-center" style="width: 100px;">날짜</th>
-                        </tr>
-                    </thead>
-                    <tbody id="postTable">
-                        <tr class="post-row"><td>030</td><td><a href="./post-30.html" class="post-link stretched-link">30번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-02-01</td></tr>
-                        <tr class="post-row"><td>029</td><td><a href="./post-29.html" class="post-link stretched-link">29번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-31</td></tr>
-                        <tr class="post-row"><td>028</td><td><a href="./post-28.html" class="post-link stretched-link">28번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-30</td></tr>
-                        <tr class="post-row"><td>027</td><td><a href="./post-27.html" class="post-link stretched-link">27번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-29</td></tr>
-                        <tr class="post-row"><td>026</td><td><a href="./post-26.html" class="post-link stretched-link">26번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-28</td></tr>
-                        <tr class="post-row"><td>025</td><td><a href="./post-25.html" class="post-link stretched-link">25번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-27</td></tr>
-                        <tr class="post-row"><td>024</td><td><a href="./post-24.html" class="post-link stretched-link">24번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-26</td></tr>
-                        <tr class="post-row"><td>023</td><td><a href="./post-23.html" class="post-link stretched-link">23번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-25</td></tr>
-                        <tr class="post-row"><td>022</td><td><a href="./post-22.html" class="post-link stretched-link">22번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-24</td></tr>
-                        <tr class="post-row"><td>021</td><td><a href="./post-21.html" class="post-link stretched-link">21번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-23</td></tr>
-                        <tr class="post-row"><td>020</td><td><a href="./post-20.html" class="post-link stretched-link">20번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-22</td></tr>
-                        <tr class="post-row"><td>019</td><td><a href="./post-19.html" class="post-link stretched-link">19번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-21</td></tr>
-                        <tr class="post-row"><td>018</td><td><a href="./post-18.html" class="post-link stretched-link">18번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-20</td></tr>
-                        <tr class="post-row"><td>017</td><td><a href="./post-17.html" class="post-link stretched-link">17번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-19</td></tr>
-                        <tr class="post-row"><td>016</td><td><a href="./post-16.html" class="post-link stretched-link">16번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-18</td></tr>
-                        <tr class="post-row"><td>015</td><td><a href="./post-15.html" class="post-link stretched-link">15번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-17</td></tr>
-                        <tr class="post-row"><td>014</td><td><a href="./post-14.html" class="post-link stretched-link">14번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-16</td></tr>
-                        <tr class="post-row"><td>013</td><td><a href="./post-13.html" class="post-link stretched-link">13번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-15</td></tr>
-                        <tr class="post-row"><td>012</td><td><a href="./post-12.html" class="post-link stretched-link">12번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-14</td></tr>
-                        <tr class="post-row"><td>011</td><td><a href="./post-11.html" class="post-link stretched-link">11번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-13</td></tr>
-                        <tr class="post-row"><td>010</td><td><a href="./post-10.html" class="post-link stretched-link">10번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-12</td></tr>
-                        <tr class="post-row"><td>009</td><td><a href="./post-09.html" class="post-link stretched-link">09번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-11</td></tr>
-                        <tr class="post-row"><td>008</td><td><a href="./post-08.html" class="post-link stretched-link">08번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-10</td></tr>
-                        <tr class="post-row"><td>007</td><td><a href="./post-07.html" class="post-link stretched-link">07번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-09</td></tr>
-                        <tr class="post-row"><td>006</td><td><a href="./post-06.html" class="post-link stretched-link">06번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-08</td></tr>
-                        <tr class="post-row"><td>005</td><td><a href="./post-05.html" class="post-link stretched-link">05번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-07</td></tr>
-                        <tr class="post-row"><td>004</td><td><a href="./post-04.html" class="post-link stretched-link">04번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-06</td></tr>
-                        <tr class="post-row"><td>003</td><td><a href="./post_03.html" class="post-link stretched-link">03번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-05</td></tr>
-                        <tr class="post-row"><td>002</td><td><a href="./post_02.html" class="post-link stretched-link">02번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-04</td></tr>
-                        <tr class="post-row"><td>001</td><td><a href="./post_01.html" class="post-link stretched-link">01번째 게시물 제목입니다.</a></td><td class="text-center post-date">2026-01-03</td></tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="col-6 col-md-4">
+            <a href="list-build.html" class="category-card shadow-sm">
+                <div class="card-icon">🛠️</div>
+                <h5 class="fw-bold">실전 제작</h5>
+                <p class="text-muted small d-none d-sm-block">앰프 제작기 및 사진</p>
+                <span class="btn-enter">입장</span>
+            </a>
+        </div>
 
-            <div id="noResult" class="text-center py-5 d-none">
-                <p class="text-muted">검색 결과가 없습니다. 🔍</p>
-            </div>
+        <div class="col-6 col-md-4">
+            <a href="list-data.html" class="category-card shadow-sm">
+                <div class="card-icon">💾</div>
+                <h5 class="fw-bold">회로도/자료</h5>
+                <p class="text-muted small d-none d-sm-block">다운로드 자료실</p>
+                <span class="btn-enter">입장</span>
+            </a>
         </div>
     </div>
 </div>
 
-<footer class="text-center py-4 text-muted border-top mt-4">
+<footer class="text-center py-4 text-muted border-top mt-5">
     <small>&copy; 2026 My Tech Blog. All rights reserved.</small>
 </footer>
-
-<script>
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#postTable tr');
-        let hasVisibleRow = false;
-
-        rows.forEach(row => {
-            const title = row.querySelector('.post-link').textContent.toLowerCase();
-            const date = row.querySelector('.post-date').textContent;
-
-            if (title.includes(filter) || date.includes(filter)) {
-                row.style.setProperty('display', '', 'important');
-                hasVisibleRow = true;
-            } else {
-                row.style.setProperty('display', 'none', 'important');
-            }
-        });
-
-        const noResult = document.getElementById('noResult');
-        if (hasVisibleRow) {
-            noResult.classList.add('d-none');
-        } else {
-            noResult.classList.remove('d-none');
-        }
-    });
-</script>
 
 </body>
 </html>
