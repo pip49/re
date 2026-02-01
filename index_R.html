@@ -33,6 +33,7 @@
         .hero h1 { font-size: 1.8rem; margin-bottom: 5px; }
         .hero p { font-size: 0.9rem; margin-bottom: 0; }
 
+        /* 새로 추가된 외부 링크 바 스타일 */
         .external-links {
             padding: 15px 0;
             background: #fff;
@@ -40,23 +41,18 @@
         }
         .link-item {
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.2rem; /* 가장 작은 크기의 아이콘 */
             transition: transform 0.2s;
-            margin: 0 15px;
+            margin: 0 15px; /* 아이콘 간 간격 확보 */
         }
         .link-item:hover { transform: scale(1.2); }
 
-        .icon-1 { color: #e74c3c; }
-        .icon-2 { color: #3498db; }
-        .icon-3 { color: #f1c40f; }
-        .icon-4 { color: #9b59b6; }
-        .icon-5 { color: #2ecc71; }
-
-        /* 모달 버튼 스타일 커스텀 (필요 시 더 작게 조정 가능) */
-        .btn-mini {
-            font-size: 0.75rem; /* 글자 크기 축소 */
-            padding: 2px 10px;  /* 패딩 축소 */
-        }
+        /* 아이콘 색상 구분 */
+        .icon-1 { color: #e74c3c; } /* 빨강 */
+        .icon-2 { color: #3498db; } /* 파랑 */
+        .icon-3 { color: #f1c40f; } /* 노랑 */
+        .icon-4 { color: #9b59b6; } /* 보라 */
+        .icon-5 { color: #2ecc71; } /* 초록 */
 
         .main-content {
             flex: 1;
@@ -93,7 +89,7 @@
             .row { --bs-gutter-x: 10px; --bs-gutter-y: 10px; }
             .col-6 { padding: 5px; }
             .card { padding: 15px 5px !important; }
-            .link-item { margin: 0 10px; }
+            .link-item { margin: 0 10px; } /* 모바일에서 간격 미세 조정 */
         }
 
         footer {
@@ -119,16 +115,14 @@
         <a href="https://pip49.github.io" class="link-item icon-5" title="github.io"><i class="bi bi-github"></i></a>
     </div>
 </nav>
-
-<div class="mt-3 text-center">
-    <a href="#" class="btn btn-sm btn-outline-primary btn-mini" data-bs-toggle="modal" data-bs-target="#libreModal">
+<div class="mt-4">
+    <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#libreModal">
         <i class="bi bi-file-earmark-text me-1"></i> 리브레 문서보기
     </a>
-    <a href="#" class="btn btn-sm btn-outline-secondary btn-mini ms-1" data-bs-toggle="modal" data-bs-target="#pdfModal">
+    <a href="#" class="btn btn-outline-secondary ms-2" data-bs-toggle="modal" data-bs-target="#pdfModal">
         <i class="bi bi-file-earmark-code me-1"></i> Code 보기
     </a>
 </div>
-
 <div class="modal fade" id="libreModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 80%; width: 80%;">
         <div class="modal-content" style="height: 80vh;">
@@ -142,7 +136,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
