@@ -9,13 +9,26 @@
     <style>
         body { background-color: #f8f9fa; }
         .list-header { background: #2c3e50; color: white; padding: 40px 0; margin-bottom: 30px; }
+
+        /* 검색창 스타일 */
         .search-container { max-width: 500px; margin: 0 auto 30px auto; }
+
+        /* 슬림해진 리스트 디자인 */
         .post-table-container { background: white; border-radius: 10px; overflow: hidden; }
-        .table thead { background-color: #34495e; color: white; position: sticky; top: 0; z-index: 10; }
+        .table thead { background-color: #34495e; color: white; }
         .table-hover tbody tr:hover { background-color: #f1f3f5; cursor: pointer; }
+
+        /* 제목 링크를 행 전체로 확장 */
         .post-row { position: relative; }
-        .post-link { text-decoration: none; color: #2c3e50; font-weight: 600; display: block; }
-        .stretched-link::after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; content: ""; }
+        .post-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            display: block;
+        }
+        .stretched-link::after {
+            position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; content: "";
+        }
         .post-date { color: #7f8c8d; font-size: 0.9rem; }
     </style>
 </head>
@@ -23,15 +36,15 @@
 
 <header class="list-header text-center">
     <div class="container">
-        <h2 class="fw-bold">카테고리 게시판 (테스트 모드)</h2>
-        <p class="mb-0">총 30개의 게시물이 등록되어 있습니다.</p>
+        <h2 class="fw-bold">카테고리 게시판</h2>
+        <p class="mb-0">관련 자료와 기록을 확인하세요.</p>
         <a href="../../index.html" class="btn btn-sm btn-outline-light mt-3">🏠 홈으로 돌아가기</a>
     </div>
 </header>
 
 <div class="container my-5">
     <div class="search-container">
-        <input type="text" id="searchInput" class="form-control form-control-lg shadow-sm" placeholder="제목이나 날짜로 검색 (예: 앰프, 02-05...)">
+        <input type="text" id="searchInput" class="form-control form-control-lg shadow-sm" placeholder="제목이나 날짜로 검색 (예: 앰프, 2026...)">
     </div>
 
     <div class="row justify-content-center">
@@ -46,25 +59,22 @@
                         </tr>
                     </thead>
                     <tbody id="postTable">
-                        <script>
-                            const tableBody = document.getElementById('postTable');
-                            const categories = ["자격증 요약", "컴퓨터 팁", "레파토리 연습", "앰프 제작"];
+                        <tr class="post-row">
+                            <td class="ps-4 text-muted">002</td>
+                            <td>
+                                <a href="./post-02.html" class="post-link stretched-link">두 번째 게시물: 회로도 또는 음원 자료</a>
+                            </td>
+                            <td class="text-center post-date">2026-01-30</td>
+                        </tr>
 
-                            for (let i = 30; i >= 1; i--) {
-                                const dateDay = (i % 28) + 1;
-                                const category = categories[i % 4];
-                                const row = `
-                                    <tr class="post-row">
-                                        <td class="ps-4 text-muted">${String(i).padStart(3, '0')}</td>
-                                        <td>
-                                            <a href="./post-sample.html" class="post-link stretched-link">[${category}] 테스트 게시물 ${i}번 제목입니다.</a>
-                                        </td>
-                                        <td class="text-center post-date">2026-02-${String(dateDay).padStart(2, '0')}</td>
-                                    </tr>`;
-                                document.write(row);
-                            }
-                        </script>
-                    </tbody>
+                        <tr class="post-row">
+                            <td class="ps-4 text-muted">001</td>
+                            <td>
+                                <a href="./post-01.html" class="post-link stretched-link">첫 번째 게시물 제목입니다.</a>
+                            </td>
+                            <td class="text-center post-date">2026-01-31</td>
+                        </tr>
+                        </tbody>
                 </table>
             </div>
 
@@ -97,6 +107,7 @@
             }
         });
 
+        // 결과 없음 메시지 제어
         const noResult = document.getElementById('noResult');
         if (hasVisibleRow) {
             noResult.classList.add('d-none');
