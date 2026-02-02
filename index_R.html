@@ -29,8 +29,6 @@
             color: white;
             padding: 20px 0;
             border-bottom: 5px solid #18bc9c;
-            position: relative;
-            z-index: 10;
         }
         .hero h1 { font-size: 1.8rem; margin-bottom: 5px; }
         .hero p { font-size: 0.9rem; margin-bottom: 0; }
@@ -39,8 +37,6 @@
             padding: 15px 0;
             background: #fff;
             border-bottom: 1px solid #eee;
-            position: relative;
-            z-index: 10;
         }
         .link-item {
             text-decoration: none;
@@ -56,44 +52,27 @@
         .icon-4 { color: #9b59b6; }
         .icon-5 { color: #2ecc71; }
 
+        /* 버튼 스타일 커스텀 */
         .btn-mini {
             font-size: 0.75rem;
             padding: 2px 10px;
         }
 
-        /* 메인 콘텐츠 배경 설정 */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 40px 0;
-            /* 배경 이미지 경로를 실제 파일명으로 수정하세요 (예: bg.jpg) */
-            background-image: url('meme.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: scroll; /* 헤더/푸터 제외 영역만 배경 적용 */
+            padding: 20px 0;
         }
 
-        /* 카드 투명화 설정 */
         .card {
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
             border-radius: 12px;
             transition: 0.3s;
             overflow: hidden;
-            /* 배경 투명도 (마지막 수치 0.7이 투명도입니다) */
-            background: rgba(255, 255, 255, 0.2) !important;
-            /* 뒤 배경을 살짝 흐리게 만들어 가독성 확보 */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: white;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2) !important;
-        }
-
         .card-icon {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
@@ -121,8 +100,6 @@
             padding: 10px 0;
             font-size: 0.7rem;
             background: #fff;
-            position: relative;
-            z-index: 10;
         }
     </style>
 </head>
@@ -143,16 +120,31 @@
     </div>
 </nav>
 
-<div class="main-content">
-    <div class="text-center mb-4">
-        <a href="#" class="btn btn-sm btn-outline-primary btn-mini bg-white" data-bs-toggle="modal" data-bs-target="#libreModal">
-            <i class="bi bi-file-earmark-text me-1"></i> 리브레 문서보기
-        </a>
-        <a href="c_01.pdf" target="_blank" class="btn btn-sm btn-outline-secondary btn-mini ms-1 bg-white">
-            <i class="bi bi-file-earmark-code me-1"></i> Code 보기
-        </a>
-    </div>
+<div class="mt-3 text-center">
+    <a href="#" class="btn btn-sm btn-outline-primary btn-mini" data-bs-toggle="modal" data-bs-target="#libreModal">
+        <i class="bi bi-file-earmark-text me-1"></i> 리브레 문서보기
+    </a>
 
+    <a href="c_01.pdf" target="_blank" class="btn btn-sm btn-outline-secondary btn-mini ms-1">
+        <i class="bi bi-file-earmark-code me-1"></i> Code 보기
+    </a>
+</div>
+
+<div class="modal fade" id="libreModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 80%; width: 80%;">
+        <div class="modal-content" style="height: 80vh;">
+            <div class="modal-header">
+                <h5 class="modal-title">리브레오피스 문서</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0" style="overflow: hidden;">
+                <iframe src="libre.html" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
     <div class="container">
         <div class="row g-2">
             <div class="col-6 col-md-3">
@@ -189,20 +181,6 @@
                     <p class="text-muted d-none d-sm-block">회로</p>
                     <a href="./posts/elec/list.html" class="btn btn-custom mt-auto">입장</a>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="libreModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 80%; width: 80%;">
-        <div class="modal-content" style="height: 80vh;">
-            <div class="modal-header">
-                <h5 class="modal-title">리브레오피스 문서</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0" style="overflow: hidden;">
-                <iframe src="libre.html" style="width: 100%; height: 100%; border: none;"></iframe>
             </div>
         </div>
     </div>
