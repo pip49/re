@@ -4,298 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>정리된 페이지</title>
+    <title>검색 아카이브</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        :root { --primary-dark: #2c3e50; }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
         body {
-            background-color: #f4f7f6;
-            font-family: 'Pretendard', sans-serif;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero {
-            background: var(--primary-dark);
-            color: white;
-            padding: 20px 0;
-            border-bottom: 5px solid #18bc9c;
+            background-color: #f8f9fa;
             position: relative;
-            z-index: 10;
-        }
-        .hero h1 { font-size: 1.8rem; margin-bottom: 5px; }
-        .hero p { font-size: 0.9rem; margin-bottom: 0; }
-
-        .external-links {
-            padding: 15px 0;
-            background: #fff;
-            border-bottom: 1px solid #eee;
-            position: relative;
-            z-index: 10;
-        }
-        .link-item {
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: transform 0.2s;
-            margin: 0 15px;
-        }
-        .link-item:hover { transform: scale(1.2); }
-
-        .icon-1 { color: #e74c3c; }
-        .icon-2 { color: #3498db; }
-        .icon-3 { color: #f1c40f; }
-        .icon-4 { color: #9b59b6; }
-        .icon-5 { color: #2ecc71; }
-
-        /* [추가] 통합 검색창 스타일 */
-        .search-wrapper {
-            position: relative;
-            max-width: 600px;
-            margin: 20px auto 10px auto;
-            padding: 0 15px;
-            z-index: 100;
-        }
-        #totalSearch {
-            border-radius: 25px;
-            padding-left: 45px;
-            height: 45px;
-            border: 2px solid #ddd;
-        }
-        .search-icon {
-            position: absolute;
-            left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-        }
-        #searchResults {
-            position: absolute;
-            width: calc(100% - 30px);
-            max-height: 350px;
-            overflow-y: auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: none;
-            margin-top: 5px;
+            min-height: 100vh;
         }
 
-        .btn-mini {
-            font-size: 0.8rem;
-            padding: 5px 12px;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px 0 40px 0;
+        /* 배경 이미지 설정 및 투명도 0.2 적용 */
+        body::before {
+            content: "";
             background-image: url('bg.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
+            background-attachment: fixed;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+            z-index: -1;
         }
 
-        .card {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            transition: 0.3s;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.2) !important;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
+        .list-header { background: #18bc9c; color: white; padding: 30px 0; margin-bottom: 30px; }
+        .list-header h2 { font-size: 2rem; }
+        .search-container { max-width: 600px; margin: 0 auto 30px auto; }
+        .post-table-container { background: white; border-radius: 10px; overflow: hidden; }
+        .table thead { background-color: #34495e; color: white; }
+        .table thead th { padding: 12px 15px !important; font-size: 0.95rem; }
+        .table td { padding: 10px 15px !important; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+        .post-row { position: relative; }
 
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.4) !important;
-        }
+        /* <a> 태그 스타일 */
+        .post-link { text-decoration: none; color: #2c3e50; font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .stretched-link::after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1; content: ""; }
 
-        .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .card h4 { font-size: 1rem; margin-bottom: 5px; }
-        .card p { font-size: 0.8rem; margin-bottom: 10px; line-height: 1.2; }
-
-        .btn-custom {
-            background-color: var(--primary-dark);
-            color: white;
-            border-radius: 15px;
-            padding: 5px 15px;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 767px) {
-            .btn-mini { font-size: 0.7rem; padding: 4px 8px; }
-        }
-
-        footer {
-            padding: 10px 0;
-            font-size: 0.7rem;
-            background: #fff;
-            position: relative;
-            z-index: 10;
-        }
+        .post-date { color: #95a5a6; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-<header class="hero text-center">
-    <h1 class="fw-bold">My Knowledge Archive</h1>
-    <p>My Page</p>
+<header class="list-header text-center">
+    <div class="container">
+        <h2 class="fw-bold">🔍 자료 검색 아카이브</h2>
+        <p class="mb-0">검색어를 입력하여 자료를 찾아보세요.</p>
+    </div>
 </header>
 
-<nav class="external-links text-center">
-    <div class="container d-flex justify-content-center align-items-center">
-        <a href="https://pip49.github.io/intro" class="link-item icon-1" title="pip49.com"><i class="bi bi-globe"></i></a>
-        <a href="http://band49.com" class="link-item icon-2" title="band49.com"><i class="bi bi-people-fill"></i></a>
-        <a href="http://125.251.58.88:49494/cgi-bin/D.cgi" class="link-item icon-3" title="D.cgi"><i class="bi bi-cpu-fill"></i></a>
-        <a href="http://125.251.58.88:49494/cgi-bin/shop.cgi" class="link-item icon-4" title="shop.cgi"><i class="bi bi-cart-fill"></i></a>
-        <a href="https://pip49.github.io" class="link-item icon-5" title="github.io"><i class="bi bi-github"></i></a>
-    </div>
-</nav>
-
-<div class="search-wrapper">
-    <i class="bi bi-search search-icon"></i>
-    <input type="text" id="totalSearch" class="form-control" placeholder="제목이나 카테고리로 검색하세요...">
-    <div id="searchResults" class="list-group shadow"></div>
-</div>
-
-<div class="main-content">
-    <div class="button-group d-flex justify-content-center gap-2 mb-4 px-2">
-        <a href="#" class="btn btn-primary btn-mini shadow-sm" data-bs-toggle="modal" data-bs-target="#libreModal">
-            <i class="bi bi-file-earmark-text me-1"></i> 리브레 문서보기
-        </a>
-
-	<a href="a.pdf" target="_blank" class="btn btn-secondary btn-mini shadow-sm" onclick="this.href='a.pdf?t=' + new Date().getTime()">
-    <i class="bi bi-file-earmark-code me-1"></i> Code 보기
-</a>
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="form-control form-control-lg shadow" placeholder="제목 검색...">
     </div>
 
-    <div class="container">
-        <div class="row g-2">
-            <div class="col-6 col-md-3">
-                <div class="card h-100 shadow-sm text-center p-3">
-                    <div class="card-icon fw-bold">Certs</div>
-                    <h4 class="fw-bold">자격증</h4>
-                    <p class="text-muted d-none d-sm-block">국가기술</p>
-                    <a href="./posts/cert/list.html" class="btn btn-custom mt-auto">입장</a>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card h-100 shadow-sm text-center p-3">
-                    <div class="card-icon">💻</div>
-                    <h4 class="fw-bold">C/Linux</h4>
-                    <p class="text-muted d-none d-sm-block">활용법</p>
-                    <a href="./posts/com/list.html" class="btn btn-custom mt-auto">입장</a>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card h-100 shadow-sm text-center p-3">
-                    <div class="card-icon">🎵</div>
-                    <h4 class="fw-bold">블루스10</h4>
-                    <p class="text-muted d-none d-sm-block">가능한 연주</p>
-                    <a href="./posts/re/list.html" class="btn btn-custom mt-auto">입장</a>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="card h-100 shadow-sm text-center p-3">
-                    <div class="card-icon">🔌</div>
-                    <h4 class="fw-bold">증폭</h4>
-                    <p class="text-muted d-none d-sm-block">회로</p>
-                    <a href="./posts/elec/list.html" class="btn btn-custom mt-auto">입장</a>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="post-table-container shadow-sm border">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center" style="width: 80px;">번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col" class="text-center" style="width: 120px;">날짜</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postTable">
+
+                        <tr class="post-row">
+                            <td class="text-center">001</td>
+                            <td><a href="posts/data1.html" class="post-link stretched-link">자료 1번 제목</a></td>
+                            <td class="text-center post-date">2026-02-17</td>
+                        </tr>
+
+                        <tr class="post-row">
+                            <td class="text-center">002</td>
+                            <td><a href="posts/data2.html" class="post-link stretched-link">자료 2번 제목</a></td>
+                            <td class="text-center post-date">2026-02-17</td>
+                        </tr>
+
+                        </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="libreModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered" style="max-width: 80%; width: 80%;">
-        <div class="modal-content" style="height: 80vh;">
-            <div class="modal-header">
-                <h5 class="modal-title">리브레오피스 문서</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-0" style="overflow: hidden;">
-                <iframe src="libre.html" style="width: 100%; height: 100%; border: none;"></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="text-center border-top">
-    <p class="text-secondary mb-0">&copy; 2026 Archive Manager.</p>
-</footer>
 
 <script>
-    // [데이터 리스트] 여기에 80개의 제목과 링크를 채워넣으세요.
-    const allPosts = [
-        { title: "전기기사 기초이론 요약", link: "./posts/cert/cert1/post_01.html", category: "자격증" },
-        { title: "프로 테스트해보는 검색기능", link: "./posts/elec/post_06.html", category: "증폭" },
-        { title: "프로그래밍_정보처리기능사", link: "./posts/cert/cert1/post_02.html", category: "자격증" },
-        { title: "컴퓨터와 리눅스 서버와 엑셀 프로그래밍>", link: "./posts/com/post_01.html", category: "C/Linux" },
-        { title: "대표적인 표준 앰프회로", link: "./posts/re/post_01.html", category: "블루스10" },
-        { title: "첫번째 연주곡", link: "./posts/elec/post_01.html", category: "증폭" },
-        // ... 앞으로 추가될 제목들 ...
-    ];
-
-    const searchInput = document.getElementById('totalSearch');
-    const resultBox = document.getElementById('searchResults');
-
-    searchInput.addEventListener('input', function() {
-        const word = this.value.toLowerCase().trim();
-        resultBox.innerHTML = '';
-
-        if (word === '') {
-            resultBox.style.display = 'none';
-            return;
-        }
-
-        // 제목(title)과 카테고리(category)에서만 필터링
-        const filtered = allPosts.filter(post =>
-            post.title.toLowerCase().includes(word) ||
-            post.category.toLowerCase().includes(word)
-        );
-
-        if (filtered.length > 0) {
-            filtered.forEach(post => {
-                const item = document.createElement('a');
-                item.href = post.link;
-                item.className = 'list-group-item list-group-item-action d-flex align-items-center py-2';
-                item.innerHTML = `
-                    <span class="badge bg-secondary me-3" style="min-width: 65px; font-size: 0.7rem;">${post.category}</span>
-                    <span style="font-size: 0.9rem;">${post.title}</span>
-                `;
-                resultBox.appendChild(item);
-            });
-            resultBox.style.display = 'block';
-        } else {
-            resultBox.style.display = 'none';
-        }
-    });
-
-    // 검색창 밖을 클릭하면 결과창 숨기기
-    document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !resultBox.contains(e.target)) {
-            resultBox.style.display = 'none';
-        }
+    // 검색 기능 스크립트 (기존 기능 유지)
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#postTable tr');
+        rows.forEach(row => {
+            const title = row.querySelector('.post-link').textContent.toLowerCase();
+            row.style.display = title.includes(filter) ? '' : 'none';
+        });
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
