@@ -8,31 +8,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #ffffff; /* 흰색 배경으로 설정 */
             position: relative;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
-        /* 배경 이미지 설정 및 투명도 0.2 적용 */
+        /* 배경 이미지 설정 - 전체가 보이도록 수정 */
         body::before {
             content: "";
             background-image: url('bg.jpg');
-            background-size: cover;
-            background-position: center;
+            background-size: contain; /* 💡 cover -> contain 으로 변경: 이미지 전체가 나오도록 비율 유지 */
+            background-repeat: no-repeat; /* 💡 반복 금지 */
+            background-position: center; /* 이미지 중앙 정렬 */
             background-attachment: fixed;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.7;
+            opacity: 0.7; /* 💡 사용자 설정 투명도 유지 */
             z-index: -1;
         }
 
         .list-header { background: #18bc9c; color: white; padding: 30px 0; margin-bottom: 30px; }
         .list-header h2 { font-size: 2rem; }
         .search-container { max-width: 600px; margin: 0 auto 30px auto; }
-        .post-table-container { background: white; border-radius: 10px; overflow: hidden; }
+        .post-table-container { background: rgba(255, 255, 255, 0.9); border-radius: 10px; overflow: hidden; } /* 테이블 배경을 약간 반투명 흰색으로 */
         .table thead { background-color: #34495e; color: white; }
         .table thead th { padding: 12px 15px !important; font-size: 0.95rem; }
         .table td { padding: 10px 15px !important; font-size: 0.9rem; border-bottom: 1px solid #eee; }
